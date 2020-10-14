@@ -30,6 +30,18 @@ pipeline:
     registry: quay.io
     repo: quay.io/packet/discover-metal
     tags:
+      - ${DRONE_BUILD_NUMBER}-${DRONE_COMMIT_SHA}
+    secrets: [docker_username, docker_password]
+    when:
+      branch: main
+      event: push
+
+  publish-image-latest:
+    group: publish
+    image: plugins/docker
+    registry: quay.io
+    repo: quay.io/packet/discover-metal
+    tags:
       - ${DRONE_TAG}
       - latest
     secrets: [docker_username, docker_password]
